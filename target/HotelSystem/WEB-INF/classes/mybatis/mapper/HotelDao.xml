@@ -1,0 +1,350 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.HotelSystem.dao.HotelDao">
+    <resultMap id="BaseResultMap" type="com.HotelSystem.entity.Hotel">
+        <id column="hotel_id" jdbcType="INTEGER" property="hotelId"/>
+        <result column="hotel_name" jdbcType="VARCHAR" property="hotelName"/>
+        <result column="stars" jdbcType="INTEGER" property="stars"/>
+    </resultMap>
+    <resultMap id="TotalResultMap" type="com.HotelSystem.entity.Total">
+        <result column="hotel_id" jdbcType="INTEGER" property="hotelId"/>
+        <result column="hotel_name" jdbcType="VARCHAR" property="hotelName"/>
+        <result column="stars" jdbcType="INTEGER" property="stars"/>
+        <result column="room_id" jdbcType="INTEGER" property="roomId"/>
+        <result column="room_name" jdbcType="VARCHAR" property="roomName"/>
+        <result column="info_id" jdbcType="INTEGER" property="infoId"/>
+        <result column="date" jdbcType="DATE" property="date"/>
+        <result column="price" jdbcType="DECIMAL" property="price"/>
+        <result column="remain" jdbcType="VARCHAR" property="remain"/>
+        <result column="order_id" jdbcType="INTEGER" property="orderId"/>
+        <result column="start_date" jdbcType="DATE" property="startDate"/>
+        <result column="leave_date" jdbcType="DATE" property="leaveDate"/>
+        <result column="amount" jdbcType="INTEGER" property="amount"/>
+        <result column="payment" jdbcType="INTEGER" property="payment"/>
+        <result column="create_date" jdbcType="DATE" property="createDate"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+    hotel_id, hotel_name, stars
+  </sql>
+    <select id="selectByExample" parameterType="com.HotelSystem.entity.HotelExample" resultMap="BaseResultMap">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List"/>
+        from hotel
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from hotel
+        where hotel_id = #{hotelId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from hotel
+    where hotel_id = #{hotelId,jdbcType=INTEGER}
+  </delete>
+    <delete id="deleteByExample" parameterType="com.HotelSystem.entity.HotelExample">
+        delete from hotel
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.HotelSystem.entity.Hotel">
+    insert into hotel (hotel_id, hotel_name, stars
+      )
+    values (#{hotelId,jdbcType=INTEGER}, #{hotelName,jdbcType=VARCHAR}, #{stars,jdbcType=INTEGER}
+      )
+  </insert>
+    <insert id="insertSelective" parameterType="com.HotelSystem.entity.Hotel">
+        insert into hotel
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="hotelId != null">
+                hotel_id,
+            </if>
+            <if test="hotelName != null">
+                hotel_name,
+            </if>
+            <if test="stars != null">
+                stars,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="hotelId != null">
+                #{hotelId,jdbcType=INTEGER},
+            </if>
+            <if test="hotelName != null">
+                #{hotelName,jdbcType=VARCHAR},
+            </if>
+            <if test="stars != null">
+                #{stars,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.HotelSystem.entity.HotelExample" resultType="java.lang.Long">
+        select count(*) from hotel
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update hotel
+        <set>
+            <if test="record.hotelId != null">
+                hotel_id = #{record.hotelId,jdbcType=INTEGER},
+            </if>
+            <if test="record.hotelName != null">
+                hotel_name = #{record.hotelName,jdbcType=VARCHAR},
+            </if>
+            <if test="record.stars != null">
+                stars = #{record.stars,jdbcType=INTEGER},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update hotel
+        set hotel_id = #{record.hotelId,jdbcType=INTEGER},
+        hotel_name = #{record.hotelName,jdbcType=VARCHAR},
+        stars = #{record.stars,jdbcType=INTEGER}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.HotelSystem.entity.Hotel">
+        update hotel
+        <set>
+            <if test="hotelName != null">
+                hotel_name = #{hotelName,jdbcType=VARCHAR},
+            </if>
+            <if test="stars != null">
+                stars = #{stars,jdbcType=INTEGER},
+            </if>
+        </set>
+        where hotel_id = #{hotelId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.HotelSystem.entity.Hotel">
+    update hotel
+    set hotel_name = #{hotelName,jdbcType=VARCHAR},
+      stars = #{stars,jdbcType=INTEGER}
+    where hotel_id = #{hotelId,jdbcType=INTEGER}
+  </update>
+
+    <select id="selectByPrimaryKeyWithRoomType" parameterType="java.lang.Integer"
+            resultMap="TotalResultMap">
+    select hotel_name,room_name
+    from hotel,room_type
+    where hotel.hotel_id = #{hotelId,jdbcType=INTEGER} and room_type.hotel_id=#{hotelId,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectHotelAveragePrice" resultMap="TotalResultMap">
+    SELECT
+        hotel_name,
+        `date`,
+        AVG( price ) AS price
+    FROM
+        room_info
+        NATURAL JOIN room_type
+        NATURAL JOIN hotel
+    GROUP BY
+        hotel_name,
+        date
+    ORDER BY
+        price
+    </select>
+
+    <select id="selectHotelAveragePriceWithDate" resultMap="TotalResultMap">
+    SELECT
+        hotel_name,
+        `date`,
+        AVG( price ) AS price
+    FROM
+        room_info
+        NATURAL JOIN room_type
+        NATURAL JOIN hotel
+        where date =#{SearchDate,jdbcType=VARCHAR}
+    GROUP BY
+        hotel_name,
+        date
+    ORDER BY
+        price
+    </select>
+
+    <select id="selectHotelAveragePriceWithRoomtype" resultMap="TotalResultMap">
+    SELECT
+	  hotel_name,
+	  room_name,
+	  avg( price ) AS price
+    FROM
+	  hotel
+	  NATURAL JOIN room_type
+	  NATURAL JOIN room_info
+    GROUP BY
+	  room_id
+    ORDER BY
+	  price
+    </select>
+
+    <select id="selectHotelAveragePriceWithRoomtypeWithDate" resultMap="TotalResultMap">
+        SELECT
+        hotel_name,
+        room_name,
+        avg( price ) AS price
+        FROM
+        hotel
+        NATURAL JOIN room_type
+        NATURAL JOIN room_info
+        WHERE
+        #{0} in (select date from room_info)
+        and #{1}in (select date from room_info)
+        and date&gt;= #{0} AND date&lt;= #{1}
+        GROUP BY
+        room_id
+        HAVING
+        min( remain ) >= #{2}
+        ORDER BY
+        price
+    </select>
+
+    <select id="selectHotelAveragePriceWithAllType" resultMap="TotalResultMap">
+    SELECT
+        hotel_name,
+        date,
+        totalremain as remain,
+        totalprice / totalremain AS price
+    FROM
+        (
+        SELECT
+            hotel_name,
+            date,
+            SUM( remain ) AS totalremain,
+            SUM( price * remain ) AS totalprice
+        FROM
+            hotel
+            NATURAL JOIN room_type
+            NATURAL JOIN room_info
+        GROUP BY
+            hotel_name,
+            date
+        ) AS r1
+    ORDER BY
+        price
+    </select>
+
+    <select id="selectHotelAveragePriceWithAllTypeWithDate" resultMap="TotalResultMap">
+    SELECT
+        hotel_name,
+        date,
+        totalremain as remain,
+        totalprice / totalremain AS price
+    FROM
+        (
+        SELECT
+            hotel_name,
+            date,
+            SUM( remain ) AS totalremain,
+            SUM( price * remain ) AS totalprice
+        FROM
+            hotel
+            NATURAL JOIN room_type
+            NATURAL JOIN room_info
+        WHERE
+        #{0} in (select date from room_info)
+        and #{1}in (select date from room_info)
+        and date&gt;= #{0} AND date&lt;= #{1}
+        GROUP BY
+            hotel_name,
+            date
+        ) AS r1
+        where r1.totalremain>=#{2}
+        ORDER BY
+          price
+    </select>
+
+    <select id="getRoomidByRoomname" resultMap="TotalResultMap">
+        select room_id from room_type where room_name=#{roomName,jdbcType=VARCHAR}
+    </select>
+
+    <select id="getMaxOrderId" resultMap="TotalResultMap">
+        select (max(order_id )+1)as order_id from `order`
+    </select>
+
+    <insert id="insertIntoOrder">
+        insert into `order` values (#{0},#{1},#{2},#{3},#{4},#{5},#{6})
+    </insert>
+
+    <update id="minusRemain">
+        update room_info set remain=remain-#{0}
+        where date&gt;=#{1}
+        and date&lt;=#{2}
+        and room_id=#{3}
+    </update>
+</mapper>
