@@ -81,8 +81,8 @@
         <div class="col-md-6 col-md-offset-3"
              style="background-color:rgba(80,77,77,0.9);height:300px;color:#FFFFFF;padding-left:30px">
             <br>酒店信息管理系统<br><br>作者：<br>关文聪<br><br>项目开源地址：<br><a
-                href="https://github.com/Eternity-Myth/Farm"
-                style="color:#ffffff">https://github.com/Eternity-Myth/Farm</a> <br><br>基本开发环境：JDK
+                href="https://github.com/Eternity-Myth/HotelSystem"
+                style="color:#ffffff">https://github.com/Eternity-Myth/HotelSystem</a> <br><br>基本开发环境：JDK
             1.8.0_162、Apache-Tomcat-9.0.6、MySQL 5.7.22 Community Server<br><br>使用框架：Spring+SpringMVC+Mybatis（主要）,Maven（项目依赖管理）,Bootstrap（前端框架）<br><br>逆向工程：MyBatis-Generator
         </div>
     </div>
